@@ -1,17 +1,18 @@
 import { Router } from 'express'
+
 import { getByCategoryId, createPosition, removePosition, updatePosition } from '../controllers/position.js'
 const router = Router()
 
 //localhost:5000/api/position/:category
-router.get('/:categoryId', getByCategoryId)
+router.get('/:categoryId', passport.authenticate('jwt', { session: false }), getByCategoryId)
 
 //localhost:5000/api/position
-router.post('/', createPosition)
+router.post('/', passport.authenticate('jwt', { session: false }), createPosition)
 
 //localhost:5000/api/position/:id
-router.patch('/:id', removePosition)
+router.delete('/:id', passport.authenticate('jwt', { session: false }), removePosition)
 
 //localhost:5000/api/position/:id
-router.delete('/:id', updatePosition)
+router.patch('/:id', passport.authenticate('jwt', { session: false }), updatePosition)
 
 export default router
